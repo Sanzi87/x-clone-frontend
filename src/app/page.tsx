@@ -18,13 +18,7 @@ const Homepage = () => {
           Following
         </Link>
         <Link className='hidden pb-3 md:flex items-center' href='/'>
-          React.js
-        </Link>
-        <Link className='hidden pb-3 md:flex items-center' href='/'>
-          Next.js
-        </Link>
-        <Link className='hidden pb-3 md:flex items-center' href='/'>
-          TypeScript
+          Around you
         </Link>
       </div>
       <Share />
