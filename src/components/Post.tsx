@@ -1,9 +1,36 @@
+import { imagekit } from '@/utils';
 import React from 'react';
 import Image from './Image';
 import PostInfo from './PostInfo';
 import PostInteractions from './PostInteractions';
+import Video from './Video';
 
-const Post = () => {
+interface FileDetailsResponse {
+  width: number;
+  height: number;
+  filePath: string;
+  url: string;
+  fileType: string;
+  customMetadata?: { sensitive: boolean };
+}
+
+const Post = async () => {
+  const getFileDetails = async (
+    fileId: string
+  ): Promise<FileDetailsResponse> => {
+    return new Promise((resolve, reject) => {
+      imagekit.getFileDetails(fileId, function (error, result) {
+        if (error) reject(error);
+        else resolve(result as FileDetailsResponse);
+      });
+    });
+  };
+
+  const fileDetails = await getFileDetails('677bdc8f432c4764167baffc');
+  // const fileDetails = await getFileDetails('677bd84a432c4764166453a5');
+
+  console.log(fileDetails);
+
   return (
     <div className='p-4 border-y-[1px] border-borderGray'>
       {/* POST TYPE */}
@@ -52,7 +79,21 @@ const Post = () => {
             maiores, neque eveniet consequatur facere eos non aperiam
             consectetur illum modi fugit? Tenetur.
           </p>
-          <Image path='/XC/general/post.jpg' alt='' width={600} height={600} />
+          {/* <Image path='/XC/general/post.jpg' alt='' width={600} height={600} /> */}
+          {fileDetails && fileDetails.fileType === 'image' ? (
+            <Image
+              path={fileDetails.filePath}
+              alt=''
+              width={fileDetails.width}
+              height={fileDetails.height}
+              // className={fileDetails.customMetadata?.sensitive ? 'blur-lg' : ''}
+            />
+          ) : (
+            <Video
+              path={fileDetails.filePath}
+              // className={fileDetails.customMetadata?.sensitive ? 'blur-lg' : ''}
+            />
+          )}
         </div>
       </div>
       <PostInteractions />
