@@ -1,14 +1,15 @@
-import React from 'react';
+import { prisma } from '@/providers/prisma';
 import Post from './Post';
 
-const Feed = () => {
+const Feed = async () => {
+  const posts = await prisma.post.findMany();
   return (
-    <div>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+    <div className=''>
+      {posts.map((post) => (
+        <div className='' key={post.id}>
+          <Post />
+        </div>
+      ))}
     </div>
   );
 };
