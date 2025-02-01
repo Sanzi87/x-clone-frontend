@@ -15,7 +15,7 @@ interface FileDetailsResponse {
   customMetadata?: { sensitive: boolean };
 }
 
-const Post = async ({ type }: { type: 'status' | 'comment' }) => {
+const Post = async ({ type }: { type?: 'status' | 'comment' }) => {
   const getFileDetails = async (
     fileId: string
   ): Promise<FileDetailsResponse> => {
@@ -30,7 +30,7 @@ const Post = async ({ type }: { type: 'status' | 'comment' }) => {
   const fileDetails = await getFileDetails('677bdc8f432c4764167baffc');
   // const fileDetails = await getFileDetails('677bd84a432c4764166453a5');
 
-  console.log(fileDetails);
+  //console.log(fileDetails);
 
   return (
     <div className='p-4 border-y-[1px] border-borderGray'>
